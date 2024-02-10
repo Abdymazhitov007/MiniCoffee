@@ -19,6 +19,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     @Query(value = "select * from tb_ingredient where is_active = true", nativeQuery = true)
     Optional<Ingredient> findById(Long id);
 
-    Ingredient findByName(String name);
+    Optional<Ingredient> findByName(String name);
 
 }

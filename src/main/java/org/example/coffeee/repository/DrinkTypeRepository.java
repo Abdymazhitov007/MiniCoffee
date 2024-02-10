@@ -20,6 +20,6 @@ public interface DrinkTypeRepository extends JpaRepository<DrinkType, Long> {
     @Query(value = "select * from tb_drink_type where is_active = true", nativeQuery = true)
     Optional<DrinkType> findById(Long id);
 
-    DrinkType findByName(String name);
+    Optional<DrinkType> findByName(String name);
 
 }

@@ -16,7 +16,7 @@ public interface DrinkRepository extends JpaRepository<Drink, Long> {
     List<Drink> findAll();
 
     @Override
-    @Query(value = "select * from tb_drink where is_active = true", nativeQuery = true)
+    @Query(value = "select * from tb_drink where is_active = true and id = :id", nativeQuery = true)
     Optional<Drink> findById(Long id);
 
     List<Drink> findByNameContaining(String name);

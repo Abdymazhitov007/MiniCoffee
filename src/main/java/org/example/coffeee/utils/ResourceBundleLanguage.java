@@ -20,7 +20,7 @@ public class ResourceBundleLanguage {
                 return EN.getString(key);
             }
             default -> {
-                return RU.getString(key);
+                return EN.getString(key);
             }
         }
     }

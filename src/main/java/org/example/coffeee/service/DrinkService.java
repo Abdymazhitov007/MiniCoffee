@@ -10,20 +10,20 @@ import java.util.Set;
 
 public interface DrinkService extends BaseService<DrinkDTO> {
 
-    DrinkDTO create(DrinkCreateRequest request);
+    DrinkDTO create(int languageOrdinal, DrinkCreateRequest request);
 
-    List<DrinkDTO> saveAll(List<DrinkCreateRequest> dtoList);
+    List<DrinkDTO> saveAll(int languageOrdinal, List<DrinkCreateRequest> dtoList);
 
-    List<DrinkDTO> getLikeName(String name);
+    List<DrinkDTO> getLikeName(int languageOrdinal, String name);
 
-    Set<DrinkDTO> getByType(String type);
+    Set<DrinkDTO> getByType(int languageOrdinal, String type);
 
-    List<DrinkDTO> filterTFT(String drinkType, Double priceFrom, Double priceTo);
-    List<DrinkDTO> filterTF(String drinkType, Double priceFrom);
-    List<DrinkDTO> filterTT(String drinkType, Double priceTo);
-    List<DrinkDTO> filterFT(Double priceFrom, Double priceTo);
-    List<DrinkDTO> filterT(Double priceTo);
-    List<DrinkDTO> filterF(Double priceFrom);
+    List<DrinkDTO> filterTFT(int languageOrdinal, String drinkType, Double priceFrom, Double priceTo);
+    List<DrinkDTO> filterTF(int languageOrdinal, String drinkType, Double priceFrom);
+    List<DrinkDTO> filterTT(int languageOrdinal, String drinkType, Double priceTo);
+    List<DrinkDTO> filterFT(int languageOrdinal, Double priceFrom, Double priceTo);
+    List<DrinkDTO> filterT(int languageOrdinal, Double priceTo);
+    List<DrinkDTO> filterF(int languageOrdinal, Double priceFrom);
 
     List<MainResponse> toResponse(Iterable<DrinkDTO> drinks);
     MainResponse toResponse(DrinkDTO drink);

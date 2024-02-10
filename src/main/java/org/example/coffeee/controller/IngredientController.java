@@ -16,8 +16,8 @@ public class IngredientController {
     private final IngredientService service;
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<?> getAll(@RequestParam int languageOrdinal) {
+        return ResponseEntity.ok(service.getAll(languageOrdinal));
     }
 
     @PostMapping("/create")
@@ -26,18 +26,18 @@ public class IngredientController {
     }
 
     @DeleteMapping("/delete")
-    public HttpStatus delete(@RequestParam Long id) {
-        service.deleteById(id);
+    public HttpStatus delete(@RequestParam int languageOrdinal, @RequestParam Long id) {
+        service.deleteById(languageOrdinal, id);
         return HttpStatus.OK;
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAll(@RequestBody List<String> names) {
-        return ResponseEntity.ok(service.saveAll(names));
+    public ResponseEntity<?> saveAll(@RequestParam int languageOrdinal, @RequestBody List<String> names) {
+        return ResponseEntity.ok(service.saveAll(languageOrdinal, names));
     }
 
     @GetMapping("/get-by-name")
-    public ResponseEntity<?> getByName(@RequestParam String name) {
-        return ResponseEntity.ok(service.getByName(name));
+    public ResponseEntity<?> getByName(@RequestParam int languageOrdinal, @RequestParam String name) {
+        return ResponseEntity.ok(service.getByName(languageOrdinal, name));
     }
 }

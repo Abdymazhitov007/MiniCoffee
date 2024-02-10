@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IngredientService extends BaseService<IngredientDTO>{
 
-    List<IngredientDTO> getIngredientsByNames(List<String> ingredients);
+    List<IngredientDTO> getIngredientsByNames(int languageOrdinal, List<String> ingredients);
     IngredientDTO create(String name);
-    List<IngredientDTO> saveAll(List<String> names);
-    IngredientDTO getByName(String name);
+    List<IngredientDTO> saveAll(int languageOrdinal, List<String> names);
+    IngredientDTO getByName(int languageOrdinal, String name);
 }

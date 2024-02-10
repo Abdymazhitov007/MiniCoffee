@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface DrinkTypeService extends BaseService<DrinkTypeDTO>{
 
-    DrinkTypeDTO getByName(String name);
+    DrinkTypeDTO getByName(int languageOrdinal, String name);
 
     DrinkTypeDTO create(String name);
 
-    List<DrinkTypeDTO> saveAll(List<String> names);
+    List<DrinkTypeDTO> saveAll(int languageOrdinal, List<String> names);
 }

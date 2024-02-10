@@ -1,6 +1,8 @@
 package org.example.coffeee.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.coffeee.exception.exceptions.EmptyListException;
+import org.example.coffeee.exception.exceptions.NotFoundException;
 import org.example.coffeee.mapper.DrinkMapper;
 import org.example.coffeee.mapper.DrinkTypeMapper;
 import org.example.coffeee.mapper.IngredientMapper;
@@ -15,6 +17,8 @@ import org.example.coffeee.repository.DrinkRepository;
 import org.example.coffeee.service.DrinkService;
 import org.example.coffeee.service.DrinkTypeService;
 import org.example.coffeee.service.IngredientService;
+import org.example.coffeee.utils.Language;
+import org.example.coffeee.utils.ResourceBundleLanguage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -38,8 +42,8 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public DrinkDTO update(DrinkDTO dto) {
-        Drink entity = repository.findById(dto.getId()).orElseThrow();
+    public DrinkDTO update(int languageOrdinal, DrinkDTO dto) {
+        Drink entity = DrinkMapper.INSTANCE.toEntity(getById(languageOrdinal, dto.getId()));
         entity.setUpdatedDate(LocalDateTime.now());
         entity.setDrinkType(DrinkTypeMapper.INSTANCE.toEntity(dto.getDrinkType()));
         entity.setIngredients(IngredientMapper.INSTANCE.toEntities(dto.getIngredients()));
@@ -51,40 +55,42 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public DrinkDTO getById(Long id) {
-        return DrinkMapper.INSTANCE.toDto(repository.findById(id).orElseThrow());
+    public DrinkDTO getById(int languageOrdinal, Long id) {
+        return DrinkMapper.INSTANCE.toDto(repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(ResourceBundleLanguage.periodMessage(Language.getLanguage(languageOrdinal), "entityNotFound"))));
     }
 
     @Override
-    public List<DrinkDTO> getAll() {
+    public List<DrinkDTO> getAll(int languageOrdinal) {
         List<Drink> drinks = repository.findAll();
-//        if(drinks.isEmpty()) throw new Exception(" ");
+        if(drinks.isEmpty())
+            throw new EmptyListException(ResourceBundleLanguage.periodMessage(Language.getLanguage(languageOrdinal), "emptyList"));
         return DrinkMapper.INSTANCE.toDtos(drinks);
     }
 
     @Override
-    public void deleteById(Long id) {
-        DrinkDTO dto = getById(id);
+    public void deleteById(int languageOrdinal, Long id) {
+        DrinkDTO dto = getById(languageOrdinal, id);
         dto.setIsActive(false);
-        update(dto);
+        update(languageOrdinal, dto);
     }
 
     @Override
-    public List<DrinkDTO> saveAll(List<DrinkCreateRequest> dtoList) {
+    public List<DrinkDTO> saveAll(int languageOrdinal, List<DrinkCreateRequest> dtoList) {
 
         System.out.println(dtoList);
 
         for (DrinkCreateRequest i: dtoList) {
-            create(i);
+            create(languageOrdinal, i);
         }
 
-        return getAll();
+        return getAll(2);
     }
 
     @Override
-    public DrinkDTO create(DrinkCreateRequest request) {
-        List<Ingredient> ingredientList = IngredientMapper.INSTANCE.toEntities(IService.getIngredientsByNames(request.getIngredientsName()));
-        DrinkType drinkType = DrinkTypeMapper.INSTANCE.toEntity(DTService.getByName(request.getDrinkType()));
+    public DrinkDTO create(int languageOrdinal, DrinkCreateRequest request) {
+        List<Ingredient> ingredientList = IngredientMapper.INSTANCE.toEntities(IService.getIngredientsByNames(languageOrdinal, request.getIngredientsName()));
+        DrinkType drinkType = DrinkTypeMapper.INSTANCE.toEntity(DTService.getByName(languageOrdinal, request.getDrinkType()));
 
         Drink entity = new Drink();
         entity.setName(request.getName());
@@ -97,48 +103,53 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public List<DrinkDTO> getLikeName(String name) {
-        return DrinkMapper.INSTANCE.toDtos(repository.findByNameContaining(name));
+    public List<DrinkDTO> getLikeName(int languageOrdinal, String name) {
+        List<Drink> response = repository.findByNameContaining(name);
+        if(response.isEmpty()) throw new EmptyListException(ResourceBundleLanguage.periodMessage(Language.getLanguage(languageOrdinal), "emptyList"));
+        return DrinkMapper.INSTANCE.toDtos(response);
     }
 
     @Override
-    public Set<DrinkDTO> getByType(String type) {
+    public Set<DrinkDTO> getByType(int languageOrdinal, String type) {
 
-        Set<Drink> response = new HashSet<>();
-        response.addAll(DrinkMapper.INSTANCE.toEntities(getLikeName(type)));
-        response.addAll(repository.findByDrinkTypeName(type));
+        Set<Drink> response = new HashSet<>(DrinkMapper.INSTANCE.toEntities(getLikeName(languageOrdinal, type)));
+        List<Drink> list = repository.findByDrinkTypeName(type);
+        if (list.isEmpty()) throw new EmptyListException(ResourceBundleLanguage.periodMessage(Language.getLanguage(languageOrdinal), "emptyList"));
+        response.addAll(list);
 
         return DrinkMapper.INSTANCE.toDtos(response);
     }
 
     @Override
-    public List<DrinkDTO> filterTFT(String drinkType, Double priceFrom, Double priceTo) {
+    public List<DrinkDTO> filterTFT(int languageOrdinal, String drinkType, Double priceFrom, Double priceTo) {
         return DrinkMapper.INSTANCE.toDtos(repository.findByDrinkTypeNameAndPriceBetween(drinkType, priceFrom, priceTo));
     }
 
     @Override
-    public List<DrinkDTO> filterTF(String drinkType, Double priceFrom) {
+    public List<DrinkDTO> filterTF(int languageOrdinal, String drinkType, Double priceFrom) {
         return DrinkMapper.INSTANCE.toDtos(repository.findByDrinkTypeNameAndPriceGreaterThanEqual(drinkType, priceFrom));
     }
 
     @Override
-    public List<DrinkDTO> filterTT(String drinkType, Double priceTo) {
+    public List<DrinkDTO> filterTT(int languageOrdinal, String drinkType, Double priceTo) {
         return DrinkMapper.INSTANCE.toDtos(repository.findByDrinkTypeNameAndPriceLessThanEqual(drinkType, priceTo));
     }
 
     @Override
-    public List<DrinkDTO> filterFT(Double priceFrom, Double priceTo) {
+    public List<DrinkDTO> filterFT(int languageOrdinal, Double priceFrom, Double priceTo) {
         return DrinkMapper.INSTANCE.toDtos(repository.findByPriceBetween(priceFrom, priceTo));
     }
 
     @Override
-    public List<DrinkDTO> filterF(Double priceFrom) {
+    public List<DrinkDTO> filterF(int languageOrdinal, Double priceFrom) {
         return DrinkMapper.INSTANCE.toDtos(repository.findByPriceGreaterThanEqual(priceFrom));
     }
 
     @Override
-    public List<DrinkDTO> filterT(Double priceTo) {
-        return DrinkMapper.INSTANCE.toDtos(repository.findByPriceLessThanEqual(priceTo));
+    public List<DrinkDTO> filterT(int languageOrdinal, Double priceTo) {
+        List<DrinkDTO> drinkDTOS = DrinkMapper.INSTANCE.toDtos(repository.findByPriceLessThanEqual(priceTo));
+        if(drinkDTOS.isEmpty()) throw new EmptyListException(ResourceBundleLanguage.periodMessage(Language.getLanguage(languageOrdinal), "emptyList"));
+        return drinkDTOS;
     }
 
     @Override

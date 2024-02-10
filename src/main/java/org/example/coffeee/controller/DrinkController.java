@@ -27,25 +27,26 @@ public class DrinkController {
 
     @GetMapping("/")
     public ResponseEntity<?> filter(@RequestParam(required = false) String drinkType,
+                                    @RequestParam(required = false) int languageOrdinal,
                                     @RequestParam(required = false) Double priceFrom,
                                     @RequestParam(required = false) Double priceTo) {
 
         if (drinkType != null && priceFrom != null && priceTo != null) {
-            return ResponseEntity.ok(service.toResponse(service.filterTFT(drinkType, priceFrom, priceTo)));
+            return ResponseEntity.ok(service.toResponse(service.filterTFT(languageOrdinal, drinkType, priceFrom, priceTo)));
         } else if (drinkType != null && priceFrom != null) {
-            return ResponseEntity.ok(service.toResponse(service.filterTF(drinkType, priceFrom)));
+            return ResponseEntity.ok(service.toResponse(service.filterTF(languageOrdinal, drinkType, priceFrom)));
         } else if (drinkType != null && priceTo != null) {
-            return ResponseEntity.ok(service.toResponse(service.filterTT(drinkType, priceTo)));
+            return ResponseEntity.ok(service.toResponse(service.filterTT(languageOrdinal, drinkType, priceTo)));
         } else if (drinkType != null) {
-            return ResponseEntity.ok(service.toResponse(service.getByType(drinkType)));
+            return ResponseEntity.ok(service.toResponse(service.getByType(languageOrdinal, drinkType)));
         } else if (priceFrom != null && priceTo != null) {
-            return ResponseEntity.ok(service.toResponse(service.filterFT(priceFrom, priceTo)));
+            return ResponseEntity.ok(service.toResponse(service.filterFT(languageOrdinal, priceFrom, priceTo)));
         } else if (priceFrom != null) {
-            return ResponseEntity.ok(service.toResponse(service.filterF(priceFrom)));
+            return ResponseEntity.ok(service.toResponse(service.filterF(languageOrdinal, priceFrom)));
         } else if (priceTo != null) {
-            return ResponseEntity.ok(service.toResponse(service.filterT(priceTo)));
+            return ResponseEntity.ok(service.toResponse(service.filterT(languageOrdinal, priceTo)));
         } else {
-            return ResponseEntity.ok(service.toResponse(service.getAll()));
+            return ResponseEntity.ok(service.toResponse(service.getAll(languageOrdinal)));
         }
     }
 
@@ -53,8 +54,8 @@ public class DrinkController {
 //    параметры(name)
 //  -> апи возвращает список напитков где содержится в имени занчение из переменной name
     @GetMapping("/name")
-    public ResponseEntity<?> getByName(@RequestParam String name) {
-        return ResponseEntity.ok(service.toResponse(service.getLikeName(name)));
+    public ResponseEntity<?> getByName(@RequestParam int languageOrdinal, @RequestParam String name) {
+        return ResponseEntity.ok(service.toResponse(service.getLikeName(languageOrdinal, name)));
     }
 
 //    GET api/v1/drink/type
@@ -62,36 +63,36 @@ public class DrinkController {
 //  -> апи возвращает список обьектов который содержит название типа напитка и спиок напитков
 //  относящихся к этому типу
     @GetMapping("/type")
-    public ResponseEntity<?> getByType(@RequestParam String type) {
-        return ResponseEntity.ok(service.toResponse(service.getByType(type)));
+    public ResponseEntity<?> getByType(@RequestParam int languageOrdinal, @RequestParam String type) {
+        return ResponseEntity.ok(service.toResponse(service.getByType(languageOrdinal, type)));
     }
 
 
     @GetMapping("/get-all")
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(service.toResponse(service.getAll()));
+    public ResponseEntity<?> getAll(@RequestParam int languageOrdinal) {
+        return ResponseEntity.ok(service.toResponse(service.getAll(languageOrdinal)));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody DrinkCreateRequest request) {
-        return ResponseEntity.ok(service.toResponse(service.create(request)));
+    public ResponseEntity<?> create(@RequestParam int languageOrdinal,  @RequestBody DrinkCreateRequest request) {
+        return ResponseEntity.ok(service.toResponse(service.create(languageOrdinal, request)));
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam Long id) {
-        service.deleteById(id);
+    public ResponseEntity<?> delete(@RequestParam int languageOrdinal, @RequestParam Long id) {
+        service.deleteById(languageOrdinal, id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAll(@RequestBody List<DrinkCreateRequest> requests) {
+    public ResponseEntity<?> saveAll(@RequestParam int languageOrdinal, @RequestBody List<DrinkCreateRequest> requests) {
 
-        return ResponseEntity.ok(service.toResponse(service.saveAll(requests)));
+        return ResponseEntity.ok(service.toResponse(service.saveAll(languageOrdinal, requests)));
     }
 
     @GetMapping("/id")
-    public ResponseEntity<?> getById(@RequestParam Long id) {
-        return ResponseEntity.ok(service.toResponse(service.getById(id)));
+    public ResponseEntity<?> getById(@RequestParam int languageOrdinal, @RequestParam Long id) {
+        return ResponseEntity.ok(service.toResponse(service.getById(languageOrdinal, id)));
     }
 
 
