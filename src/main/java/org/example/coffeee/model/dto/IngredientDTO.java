@@ -12,11 +12,14 @@ import java.time.LocalDateTime;
 @Builder
 public class IngredientDTO {
 
-    Long id;
-    LocalDateTime createdDate;
-    LocalDateTime updatedDate;
-    Boolean isActive;
+    private Long id;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
+    private Boolean isActive;
 
-    String name;
+    private String name;
 
+    public String toString() {
+        return "\nIngredientDTO(id=" + this.getId() + ", createdDate=" + this.getCreatedDate() + ", updatedDate=" + this.getUpdatedDate() + ", isActive=" + this.getIsActive() + ", name=" + this.getName() + ")";
+    }
 }

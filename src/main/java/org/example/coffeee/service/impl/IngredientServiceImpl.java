@@ -1,6 +1,7 @@
 package org.example.coffeee.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.coffeee.exception.exceptions.EmptyListException;
 import org.example.coffeee.mapper.DrinkMapper;
 import org.example.coffeee.mapper.DrinkTypeMapper;
 import org.example.coffeee.mapper.IngredientMapper;
@@ -26,6 +27,7 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientDTO save(IngredientDTO dto) {
         Ingredient entity = IngredientMapper.INSTANCE.toEntity(dto);
         entity.setCreatedDate(LocalDateTime.now());
+        entity.setUpdatedDate(LocalDateTime.now());
         entity.setIsActive(true);
         return IngredientMapper.INSTANCE.toDto(repository.save(entity));
     }
@@ -34,6 +36,7 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientDTO update(IngredientDTO dto) {
         Ingredient entity = repository.findById(dto.getId()).orElseThrow();
         entity.setUpdatedDate(LocalDateTime.now());
+        entity.setIsActive(dto.getIsActive());
         entity.setName(dto.getName());
         return IngredientMapper.INSTANCE.toDto(repository.saveAndFlush(entity));
     }
@@ -46,7 +49,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public List<IngredientDTO> getAll() {
         List<Ingredient> drinks = repository.findAll();
-//        if(drinks.isEmpty()) throw new Exception(" ");
+        if(drinks.isEmpty()) throw new EmptyListException(" ");
         return IngredientMapper.INSTANCE.toDtos(drinks);
     }
 
@@ -66,5 +69,25 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
         return IngredientMapper.INSTANCE.toDtos(ingredientList);
+    }
+
+    @Override
+    public IngredientDTO create(String name) {
+        return save(IngredientDTO.builder()
+                .name(name)
+                .build());
+    }
+
+    @Override
+    public List<IngredientDTO> saveAll(List<String> names) {
+        for (String i: names) {
+            create(i);
+        }
+        return getAll();
+    }
+
+    @Override
+    public IngredientDTO getByName(String name) {
+        return IngredientMapper.INSTANCE.toDto(repository.findByName(name));
     }
 }

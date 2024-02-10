@@ -29,9 +29,9 @@ public class Drink {
     String name;
     Double price;
 
-    @OneToMany
+    @ManyToMany
     List<Ingredient> ingredients;
-    Double size;
+    Double volume;
 
 
 }

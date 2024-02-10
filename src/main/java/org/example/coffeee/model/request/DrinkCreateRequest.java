@@ -1,6 +1,5 @@
 package org.example.coffeee.model.request;
 
-import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,11 +14,20 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DrinkCreateRequest {
 
-    @Pattern(regexp = "^(fd)$")
+
     String drinkType;
     String name;
     Double price;
     List<String> ingredientsName;
-    Double size;
+    Double volume;
 
+
+    @Override
+    public String toString() {
+        return "\nDrinkCreateRequest(" +
+                "drinkType=" + this.getDrinkType() + ", " +
+                "name=" + this.getName() + ", price=" + this.getPrice() + ", " +
+                "ingredientsName=" + this.getIngredientsName() + ", " +
+                "volume=" + this.getVolume() + ")";
+    }
 }

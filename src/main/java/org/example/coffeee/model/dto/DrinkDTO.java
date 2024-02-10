@@ -1,11 +1,7 @@
 package org.example.coffeee.model.dto;
 
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.example.coffeee.model.entity.DrinkType;
-import org.example.coffeee.model.entity.Ingredient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +21,6 @@ public class DrinkDTO {
     String name;
     Double price;
     List<IngredientDTO> ingredients;
-    Double size;
+    Double volume;
 
 }

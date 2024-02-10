@@ -1,0 +1,129 @@
+[
+  {
+    "drinkType": "Coffee",
+    "name": "Espresso",
+    "price": 2.50,
+    "ingredientsName": ["Coffee beans", "Water"],
+    "volume": 0.25
+  },
+  {
+    "drinkType": "Coffee",
+    "name": "Espresso",
+    "price": 3.50,
+    "ingredientsName": ["Coffee beans", "Water"],
+    "volume": 0.35
+  },
+  {
+    "drinkType": "Coffee",
+    "name": "Espresso",
+    "price": 4.50,
+    "ingredientsName": ["Coffee beans", "Water"],
+    "volume": 0.5
+  },
+  {
+    "drinkType": "Coffee",
+    "name": "Cappuccino",
+    "price": 3.00,
+    "ingredientsName": ["Coffee beans", "Milk"],
+    "volume": 0.25
+  },
+  {
+    "drinkType": "Coffee",
+    "name": "Cappuccino",
+    "price": 4.00,
+    "ingredientsName": ["Coffee beans", "Milk"],
+    "volume": 0.35
+  },
+  {
+    "drinkType": "Coffee",
+    "name": "Cappuccino",
+    "price": 5.00,
+    "ingredientsName": ["Coffee beans", "Milk"],
+    "volume": 0.5
+  },
+  {
+    "drinkType": "Chocolate",
+    "name": "Hot Chocolate",
+    "price": 3.50,
+    "ingredientsName": ["Cocoa", "Milk", "Sugar"],
+    "volume": 0.25
+  },
+  {
+    "drinkType": "Chocolate",
+    "name": "Hot Chocolate",
+    "price": 4.50,
+    "ingredientsName": ["Cocoa", "Milk", "Sugar"],
+    "volume": 0.35
+  },
+  {
+    "drinkType": "Chocolate",
+    "name": "Hot Chocolate",
+    "price": 5.50,
+    "ingredientsName": ["Cocoa", "Milk", "Sugar"],
+    "volume": 0.5
+  },
+  {
+    "drinkType": "Cold drinks",
+    "name": "Frappe",
+    "price": 4.00,
+    "ingredientsName": ["Milk", "Ice", "Coffee extract", "Sugar"],
+    "volume": 0.25
+  },
+  {
+    "drinkType": "Cold drinks",
+    "name": "Frappe",
+    "price": 5.00,
+    "ingredientsName": ["Milk", "Ice", "Coffee extract", "Sugar"],
+    "volume": 0.35
+  },
+  {
+    "drinkType": "Cold drinks",
+    "name": "Frappe",
+    "price": 6.00,
+    "ingredientsName": ["Milk", "Ice", "Coffee extract", "Sugar"],
+    "volume": 0.5
+  },
+  {
+    "drinkType": "Tea",
+    "name": "Tea with Milk",
+    "price": 3.00,
+    "ingredientsName": ["Tea", "Milk", "Sugar"],
+    "volume": 0.25
+  },
+  {
+    "drinkType": "Tea",
+    "name": "Tea with Milk",
+    "price": 4.00,
+    "ingredientsName": ["Tea", "Milk", "Sugar"],
+    "volume": 0.35
+  },
+  {
+    "drinkType": "Tea",
+    "name": "Tea with Milk",
+    "price": 5.00,
+    "ingredientsName": ["Tea", "Milk", "Sugar"],
+    "volume": 0.5
+  },
+  {
+    "drinkType": "Fruit drinks",
+    "name": "Fruit Smoothie",
+    "price": 4.50,
+    "ingredientsName": ["Banana", "Ice", "Honey or Juice"],
+    "volume": 0.25
+  },
+  {
+    "drinkType": "Fruit drinks",
+    "name": "Fruit Smoothie",
+    "price": 5.50,
+    "ingredientsName": ["Strawberry", "Ice", "Honey or Juice"],
+    "volume": 0.35
+  },
+  {
+    "drinkType": "Fruit drinks",
+    "name": "Fruit Smoothie",
+    "price": 6.50,
+    "ingredientsName": ["Mango", "Ice", "Honey or Juice"],
+    "volume": 0.5
+  }
+
+]

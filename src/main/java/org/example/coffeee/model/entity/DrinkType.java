@@ -17,11 +17,15 @@ public class DrinkType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private
     Long id;
-    LocalDateTime createdDate;
-    LocalDateTime updatedDate;
-    Boolean isActive;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
+    private Boolean isActive;
 
-    String name;
+    private String name;
 
+    public String toString() {
+        return "\nDrinkType(id=" + this.getId() + ", createdDate=" + this.getCreatedDate() + ", updatedDate=" + this.getUpdatedDate() + ", isActive=" + this.getIsActive() + ", name=" + this.getName() + ")";
+    }
 }
